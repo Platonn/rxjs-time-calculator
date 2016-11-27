@@ -8,4 +8,6 @@ export class Task {
   durationHours: number;
   durationMinutes: number;
   endTime: Moment;
+  plannedEndTime: Moment;
+  timeLeft: Moment;
 }

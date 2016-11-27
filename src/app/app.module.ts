@@ -4,15 +4,17 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
-import {TimeTableComponent} from './components/time-table/time-table.component';
-import {CurrentTimeComponent} from './components/current-time/current-time.component';
+import {TasksComponent} from './components/tasks/tasks.component';
+import {TimerComponent} from './components/timer/timer.component';
 import {MomentModule} from 'angular2-moment';
+import {TasksService} from './components/tasks/tasks.service';
+import {TimerService} from './components/timer/timer.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TimeTableComponent,
-    CurrentTimeComponent
+    TasksComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +22,7 @@ import {MomentModule} from 'angular2-moment';
     HttpModule,
     MomentModule
   ],
-  providers: [],
+  providers: [TasksService, TimerService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
