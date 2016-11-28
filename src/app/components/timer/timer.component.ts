@@ -27,7 +27,7 @@ export class TimerComponent implements OnInit {
   }
 
   registerClockTicking() {
-    this.timerService.getTimer().subscribe(time => {
+    this.timerService.getTimer$().subscribe(time => {
       this.time = time;
       this.refreshSecondsClock();
       this.refreshMinutesClock();

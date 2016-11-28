@@ -15,7 +15,7 @@ export class TimerService {
     this.registerClockTicking();
   }
 
-  public getTimer(): Observable<Moment> {
+  public getTimer$(): Observable<Moment> {
     return this.timer.asObservable();
   }
 

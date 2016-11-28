@@ -1,0 +1,32 @@
+<table>
+  <thead>
+  <tr>
+    <th colspan="7">Dostępność</th>
+  </tr>
+  <tr>
+    <th colspan="3">Od</th>
+    <th></th>
+    <th colspan="3">Do</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let period of periods; let i=index;">
+    <td><input type="number" min="0" max="23" [(ngModel)]="periods[i].startHours"
+               (keyup)="calcSum()"/>
+    </td>
+    <td>:</td>
+    <td><input type="number" min="0" max="59" [(ngModel)]="periods[i].startMinutes"
+               (keyup)="calcSum()"/></td>
+    <td> - </td>
+    <td><input type="number" min="0" max="23" [(ngModel)]="periods[i].endHours"
+               (keyup)="calcSum()"/>
+    </td>
+    <td>:</td>
+    <td><input type="number" min="0" max="59" [(ngModel)]="periods[i].endMinutes"
+               (keyup)="calcSum()"/></td>
+  </tr>
+  </tbody>
+</table>
+<div>
+  Czas: {{ sum.format('HH:mm:ss') }}
+</div>

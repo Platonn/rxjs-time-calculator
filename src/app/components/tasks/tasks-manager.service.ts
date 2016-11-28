@@ -45,4 +45,17 @@ export class TasksManagerService {
     }
     return tasks;
   }
+
+  public copyToPlannedEndTime(tasks : Task[]) :Task[]{
+    for (let task of tasks) {
+      task.plannedEndTime = task.endTime.clone();
+    }
+    return tasks;
+  }
+
+  public calcTasksDurationSum(tasks : Task[]) : Moment{
+    return tasks
+      .map(task => moment.duration({hours: task.durationHours, minutes: task.durationMinutes}))
+      .reduce((sum, duration) => sum.add(duration), moment(0).utc());
+  }
 }
