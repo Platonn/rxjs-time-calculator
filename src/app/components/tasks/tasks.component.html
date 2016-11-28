@@ -15,12 +15,30 @@
   <tbody>
   <tr *ngFor="let task of tasks; let i=index;">
     <td><input type="text" [(ngModel)]="tasks[i].name"/></td>
-    <td><input type="number" min="0" max="23" [(ngModel)]="tasks[i].durationHours" (change)="calculateEndTimes()"/></td>
+    <td><input type="number" min="0" max="23" [(ngModel)]="tasks[i].durationHours" (change)="onTaskDurationsChanged()"/>
+    </td>
     <td>:</td>
-    <td><input type="number" min="0" max="59" [(ngModel)]="tasks[i].durationMinutes" (change)="calculateEndTimes()"/></td>
-    <td>{{ tasks[i].endTime.format('HH:mm') }}</td>
-    <td>{{ tasks[i].plannedEndTime.format('HH:mm') }}</td>
-    <td>{{ tasks[i].timeLeft.format('HH:mm') }}</td>
+    <td><input type="number" min="0" max="59" [(ngModel)]="tasks[i].durationMinutes"
+               (change)="onTaskDurationsChanged()"/></td>
+    <td>{{ tasks[i].endTime.format('HH:mm:ss') }}</td>
+    <td>{{ tasks[i].plannedEndTime.format('HH:mm:ss') }}</td>
+    <td>{{ tasks[i].timeLeft.format('HH:mm:ss') }}</td>
+  </tr>
+  </tbody>
+</table>
+
+
+<table>
+  <tbody>
+  <tr>
+    <th>Praca</th>
+    <th>Czas</th>
+    <th>Bilans</th>
+  </tr>
+  <tr>
+    <td>{{tasksDurationSum.format('HH:mm')}}</td>
+    <td>{{'czas'}}</td>
+    <td>{{'bilans'}}</td>
   </tr>
   </tbody>
 </table>

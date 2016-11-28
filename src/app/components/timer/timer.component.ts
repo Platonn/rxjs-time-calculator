@@ -12,7 +12,7 @@ import {TimerService} from './timer.service';
 export class TimerComponent implements OnInit {
   private timerService: TimerService;
 
-  private timer: Moment;
+  private time: Moment;
   private secondsClock: string;
   private minutesClock: string;
   private nearestQuarterClock: string;
@@ -27,7 +27,8 @@ export class TimerComponent implements OnInit {
   }
 
   registerClockTicking() {
-    this.timerService.getEverySecondObservable().subscribe(_ => {
+    this.timerService.getTimer().subscribe(time => {
+      this.time = time;
       this.refreshSecondsClock();
       this.refreshMinutesClock();
       this.refreshNearestQuarterClock();
@@ -35,15 +36,15 @@ export class TimerComponent implements OnInit {
   }
 
   refreshSecondsClock() {
-    this.secondsClock = this.timerService.getClock().format('HH:mm:ss');
+    this.secondsClock = this.time.format('HH:mm:ss');
   }
 
   refreshMinutesClock() {
-    this.minutesClock = this.timerService.getClock().format('HH:mm');
+    this.minutesClock = this.time.format('HH:mm');
   }
 
   refreshNearestQuarterClock() {
-    const nearestQuarter = this.timerService.getNearestQuarterClock();
+    const nearestQuarter = this.timerService.roundToNearestQuarter(this.time);
     this.nearestQuarterClock = nearestQuarter.format('HH:mm');
   }
 

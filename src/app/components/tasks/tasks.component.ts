@@ -5,82 +5,85 @@ import Duration = moment.Duration;
 import {Task} from './task';
 import {TasksService} from './tasks.service';
 import {TimerService} from '../timer/timer.service';
+import {TasksManagerService} from './tasks-manager.service';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: 'tasks.component.html',
   styleUrls: ['tasks.component.css']
 })
+
 export class TasksComponent implements OnInit {
   private taskService: TasksService;
   private timerService: TimerService;
+  private tasksManagerService: TasksManagerService;
   private tasks: Task[];
+  private tasksDurationSum: Moment;
+  private time: Moment;
 
-  constructor(taskService: TasksService, timerService: TimerService) {
+  constructor(taskService: TasksService,
+              timerService: TimerService,
+              tasksManagerService: TasksManagerService) {
     this.taskService = taskService;
     this.timerService = timerService;
+    this.tasksManagerService = tasksManagerService;
   }
 
   ngOnInit() {
     this.getTasks();
+    this.getTimer();
+    this.calcAll();
 
-    this.calculateEndTimes();
-    this.copyToPlannedEndTime();
+  }
 
-    this.timerService.getEverySecondObservable().subscribe(_ => {
-      this.calculateTimeLeft();
-    })
+  calcAll() {
+    this.calcEndTimes();
+    this.calcTasksDurationSum();
+  }
+
+  getTimer() {
+    this.time = this.timerService.getCurrentTime();
+    this.timerService.getTimer().subscribe(timer => {
+      this.time = timer;
+      this.calcTimeLeft();
+    });
   }
 
   copyToPlannedEndTime() {
     for (let task of this.tasks) {
       task.plannedEndTime = task.endTime.clone();
     }
-    this.calculateTimeLeft();
+    this.calcTimeLeft();
   }
 
+  onTaskDurationsChanged() {
+    this.calcEndTimes();
+    this.calcTasksDurationSum();
+  }
+
+  calcTasksDurationSum() {
+    this.tasksDurationSum = this.tasks
+      .map(task => moment.duration({hours: task.durationHours, minutes: task.durationMinutes}))
+      .reduce((sum, duration) => sum.add(duration), this.timerService.getTimeZero());
+  }
 
   addQuarterToPlannedEndTime() {
-    for (let task of this.tasks) {
-      task.plannedEndTime = task.plannedEndTime.add(15, 'minutes');
-    }
-    this.calculateTimeLeft();
+    this.tasks = this.tasksManagerService.addQuarterToPlannedEndTime(this.tasks);
+    this.calcTimeLeft();
   }
 
   subtractQuarterFromPlannedEndTime() {
-    for (let task of this.tasks) {
-      task.plannedEndTime = task.plannedEndTime.subtract(15, 'minutes');
-    }
-    this.calculateTimeLeft();
+    this.tasks = this.tasksManagerService.subtractQuarterFromPlannedEndTime(this.tasks);
+    this.calcTimeLeft();
   }
 
-
-  calculateEndTimes() {
-    let startTime = this.timerService.getNearestQuarterClock();
-
-    let task = this.tasks[0];
-    let duration = moment.duration({minutes: task.durationMinutes, hours: task.durationHours});
-    this.tasks[0].endTime = startTime.clone().add(duration);
-
-    let length = this.tasks.length;
-    for (let i = 1; i < length; i++) {
-      let previousTask = this.tasks[i - 1];
-      let task = this.tasks[i];
-      let duration = moment.duration({minutes: task.durationMinutes, hours: task.durationHours});
-      this.tasks[i].endTime = previousTask.endTime.clone().add(duration);
-    }
-    console.log('recalculation done');
-    return this.tasks
+  calcEndTimes() {
+    this.tasks = this.tasksManagerService.calcEndTimes(this.time, this.tasks);
   }
 
-  calculateTimeLeft() {
-    let clock = this.timerService.getClock();
-    for (let task of this.tasks) {
-      let diff = moment(task.plannedEndTime.diff(clock)).utc(); // utc is important, because its absolute difference
-      task.timeLeft = diff;
-    }
+  calcTimeLeft() {
+    this.tasksManagerService.calcTimeLeft(this.time, this.tasks);
   }
-
 
   getTasks() {
     this.tasks = this.taskService.getTasks();

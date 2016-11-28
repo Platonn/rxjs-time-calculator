@@ -9,12 +9,13 @@ import {TimerComponent} from './components/timer/timer.component';
 import {MomentModule} from 'angular2-moment';
 import {TasksService} from './components/tasks/tasks.service';
 import {TimerService} from './components/timer/timer.service';
+import {TasksManagerService} from './components/tasks/tasks-manager.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     TasksComponent,
-    TimerComponent
+    TimerComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +23,7 @@ import {TimerService} from './components/timer/timer.service';
     HttpModule,
     MomentModule
   ],
-  providers: [TasksService, TimerService],
+  providers: [TasksService, TimerService, TasksManagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
