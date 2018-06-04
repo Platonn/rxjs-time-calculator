@@ -28,7 +28,12 @@ import { AvailabilityPeriodsComponent } from './components/availability-periods/
     HttpModule,
     MomentModule
   ],
-  providers: [TasksService, TimerService, TasksManagerService, StartTimeService],
+  providers: [
+    TasksService,
+    TimerService,
+    TasksManagerService,
+    StartTimeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

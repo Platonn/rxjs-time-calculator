@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as moment from 'moment';
 import Moment = moment.Moment;
-import {Observable, BehaviorSubject} from 'rxjs';
+import {Observable, BehaviorSubject, timer} from 'rxjs';
 
 @Injectable()
 export class TimerService {
@@ -36,7 +36,7 @@ export class TimerService {
   }
 
   private registerClockTicking() {
-    Observable.timer(0, 1000)
+    timer(0, 1000)
       .subscribe(_ => {
         this.timer.next(moment());
       });
