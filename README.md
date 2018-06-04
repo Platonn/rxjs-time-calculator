@@ -1,7 +1,7 @@
 # TimeCalculator
 Productivity tool to calculate time remaining this day for your list of todos.
 
-Time is calculated live (based on observables), and with rounding to nearest quater. Using obserables and timeouts to calculate time needed for my daily-routine tasks (and get know when they will be finished). 
+Time is calculated live (based on observables), and with rounding to nearest quater.
 
 *Please note: due to deprecated angular-cli version it has problem with compiling.*
 
