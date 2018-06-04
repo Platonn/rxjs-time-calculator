@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
-import {Observable} from 'rxjs/Rx';
 import Moment = moment.Moment;
-import {TimerService} from './timer.service';
+import {TimerService} from '../../services/timer.service';
 
 @Component({
   selector: 'app-timer',

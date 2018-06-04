@@ -2,10 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import Moment = moment.Moment;
 import Duration = moment.Duration;
-import {Task} from './task';
-import {TasksService} from './tasks.service';
-import {TasksManagerService} from './tasks-manager.service';
-import {StartTimeService} from '../start-time/start-time.service';
+import {Task} from '../../models';
+import {TasksService, TasksManagerService, StartTimeService} from '../../services';
 
 @Component({
   selector: 'app-tasks',

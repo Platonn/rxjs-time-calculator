@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {StartTimeService} from './start-time.service';
+import {StartTimeService} from '../../services';
 import * as moment from 'moment';
 import Moment = moment.Moment;
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Period} from './Period';
+import {Period} from '../../models';
 import * as moment from 'moment';
 import Moment = moment.Moment;
 

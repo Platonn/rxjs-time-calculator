@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as moment from 'moment';
 import Moment = moment.Moment;
-import {TimerService} from '../timer/timer.service';
+import {TimerService} from './timer.service';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
 @Injectable()
